@@ -22,6 +22,11 @@ public class RomanNumeralTranslatorTest {
             "1775, MDCCLXXV",
             "1776, MDCCLXXVI",
             "1777, MDCCLXXVII",
+            "900, CM",
+            "400, CD",
+            "40, XL",
+            "9, IX",
+            "4, IV",
     })
     void should_translate_number_to_roman_literal(int input, String expectedRomanNumeral) {
         assertThat(translator.translate(input)).isEqualTo(expectedRomanNumeral);
