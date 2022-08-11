@@ -1,67 +1,40 @@
 package fr.kaibee;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class RomanNumeralTranslator {
+    public static final Map<String, Integer> ROMAN_LETTER_TO_NUMERIC_VALUES = new LinkedHashMap<>() {{
+        put("M", 1000);
+        put("CM", 900);
+        put("D", 500);
+        put("CD", 400);
+        put("C", 100);
+        put("L", 50);
+        put("XL", 40);
+        put("X", 10);
+        put("IX", 9);
+        put("V", 5);
+        put("IV", 4);
+        put("I", 1);
+    }};
+
     public String translate(int input) {
-        String res = "";
-        while (input >= 1000) {
-            res += "M";
-            input -= 1000;
+        StringBuilder res = new StringBuilder();
+        for (Map.Entry<String, Integer> romanLetterToNumeric : ROMAN_LETTER_TO_NUMERIC_VALUES.entrySet()) {
+            input = updateTranslationAndReturnRemainingNumber(res, input,
+                    romanLetterToNumeric.getKey(), romanLetterToNumeric.getValue());
         }
-        if (input >= 900) {
-            res += "CM";
-            input -= 900;
-        }
+        return res.toString();
+    }
 
-        if (input >= 500) {
-            res += "D";
-            input -= 500;
+    private static int updateTranslationAndReturnRemainingNumber(StringBuilder translation, int remainingNumber,
+                                                                 String romanLetter, int romanLetterNumericValue) {
+        while (remainingNumber >= romanLetterNumericValue) {
+            translation.append(romanLetter);
+            remainingNumber -= romanLetterNumericValue;
         }
-
-        if (input >= 400) {
-            res += "CD";
-            input -= 400;
-        }
-
-        while (input >= 100) {
-            res += "C";
-            input -= 100;
-        }
-
-        if (input >= 50) {
-            res += "L";
-            input -= 50;
-        }
-
-        if (input >= 40) {
-            res += "XL";
-            input -= 40;
-        }
-
-        while (input >= 10) {
-            res += "X";
-            input -= 10;
-        }
-
-        if (input == 9) {
-            res += "IX";
-            input -= 9;
-        }
-
-        if (input >= 5) {
-            res += "V";
-            input -= 5;
-        }
-        if (input == 4) {
-            res += "IV";
-            input -= 4;
-        }
-
-        while (input >= 1) {
-            res += "I";
-            input -= 1;
-        }
-
-        return res;
+        return remainingNumber;
     }
 
 }
